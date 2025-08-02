@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  easy_bert:
+    image: bert:1.1
+    container_name: bert
+    stdin_open: true    
+    tty: true          
+    volumes:
+      - /home/user/ai_course:/root/ai_course

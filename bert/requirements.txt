@@ -1,0 +1,7 @@
+#requirements.txt
+torch
+transformers
+pandas
+scikit-learn
+flask
+accelerate
