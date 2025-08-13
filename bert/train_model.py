@@ -9,7 +9,7 @@ train_encodings, val_encodings, train_labels, val_labels = load_and_process_data
 # 创建 PyTorch Dataset
 train_dataset = ReviewsDataset(train_encodings, train_labels)
 # TODO 仿照 训练数据train_dataset 的处理， 补全 推理数据val_dataset的代码
-val_dataset =  ...
+val_dataset =  ReviewsDataset(val_encodings, val_labels)
 
 # 加载本地预训练的 BERT 模型
 model = BertForSequenceClassification.from_pretrained('/root/ai_course/bert/bert-models/bert-base-chinese', num_labels=2)
@@ -32,10 +32,10 @@ training_args = TrainingArguments(
 # 使用 Trainer API 进行训练
 # TODO 对于上述处理完成的数据 将下面缺失部分补全
 trainer = Trainer(
-    model=...,
-    args=...,
-    train_dataset=...,
-    eval_dataset=...
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=val_dataset
 )
 
 # 训练模型
