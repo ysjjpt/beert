@@ -26,9 +26,9 @@ def load_and_process_data(csv_file):
     # TODO 提示： 1. 根据train_model.py引用可知 此方法需要返回4个数据
     #            2. 需要处理的数据是上述代码中未被应用的部分
     #            3. 处理内容是对训练集和验证集进行 分词
-    train_encodings = ...
-    val_encodings = ...
-    return ..., ..., ..., ...
+    train_encodings = tokenize_data(train_texts)
+    val_encodings = tokenize_data(val_texts)
+    return train_encodings,val_encodings,train_labels.tolist(), val_labels.tolist()
 
 class ReviewsDataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
