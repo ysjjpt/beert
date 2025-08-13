@@ -33,8 +33,8 @@ teacher_model = BertForSequenceClassification.from_pretrained(teacher_model_name
 
 # 学生模型（较小的Transformer模型）
 student_model_name = 'models/TinyBERT_4L_zh'
-student_tokenizer = ...
-student_model = ...
+student_tokenizer = BertTokenizer.from_pretrained(student_model_name)
+student_model =  BertForSequenceClassification.from_pretrained(student_model_name, num_labels=2)
 
 
 texts = ['这部电影太棒了！', '非常失望，浪费时间', '演员表演得很好。', '电影很好看', '导演不行啊，编剧也没有逻辑',  "这部电影太棒了，演员表演非常出色！",
@@ -45,7 +45,7 @@ texts = ['这部电影太棒了！', '非常失望，浪费时间', '演员表�
 labels = [1, 0, 1, 1, 0, 1, 0, 0, 1]  # 假设1表示正面，0表示负面
 
 # 创建数据集
-dataset = ...
+dataset = TextClassificationDataset( texts, labels, student_tokenizer)
 dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
 
 
@@ -134,7 +134,7 @@ print("\n开始进行情感分析推理：")
 print("-" * 50)
 
 for text in test_texts:
-    predicted_class, confidence = ...
+    predicted_class, confidence = predict_sentiment(text, student_model, student_tokenizer)
     sentiment = "正面" if predicted_class == 1 else "负面"
     print(f"文本: {text}")
     print(f"情感: {sentiment}")
