@@ -27,25 +27,21 @@ class TextClassificationDataset(Dataset):
         }
     
 # 教师模型（较大的Transformer模型）
-teacher_model_name = 'models/chinese-roberta-wwm-ext'
+teacher_model_name = 'hfl/chinese-roberta-wwm-ext'
 teacher_tokenizer = BertTokenizer.from_pretrained(teacher_model_name)
 teacher_model = BertForSequenceClassification.from_pretrained(teacher_model_name, num_labels=2)
 
 # 学生模型（较小的Transformer模型）
-student_model_name = 'models/TinyBERT_4L_zh'
+student_model_name = 'huawei-noah/TinyBERT_General_4L_312D'
 student_tokenizer = BertTokenizer.from_pretrained(student_model_name)
-student_model =  BertForSequenceClassification.from_pretrained(student_model_name, num_labels=2)
+student_model = BertForSequenceClassification.from_pretrained(student_model_name, num_labels=2)
 
 
-texts = ['这部电影太棒了！', '非常失望，浪费时间', '演员表演得很好。', '电影很好看', '导演不行啊，编剧也没有逻辑',  "这部电影太棒了，演员表演非常出色！",
-    "服务态度很差，完全不推荐。",
-    "产品质量一般，价格偏贵。",
-    "这个餐厅的菜品非常美味，环境也很好。"
-]
-labels = [1, 0, 1, 1, 0, 1, 0, 0, 1]  # 假设1表示正面，0表示负面
+texts = ['这部电影太棒了！', '非常失望，浪费时间', '演员表演得很好。', '电影很好看', '导演不行啊，编剧也没有逻辑']
+labels = [1, 0, 1, 1, 0]  # 假设1表示正面，0表示负面
 
 # 创建数据集
-dataset = TextClassificationDataset( texts, labels, student_tokenizer)
+dataset = TextClassificationDataset(texts, labels, student_tokenizer)
 dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
 
 
@@ -124,10 +120,10 @@ def predict_sentiment(text, model, tokenizer):
 
 # 测试推理
 test_texts = [
-    "这部电影太棒！",
-    "不推荐。",
-    "质量一般。",
-    "非常美味。"
+    "这部电影太棒了，演员表演非常出色！",
+    "服务态度很差，完全不推荐。",
+    "产品质量一般，价格偏贵。",
+    "这个餐厅的菜品非常美味，环境也很好。"
 ]
 
 print("\n开始进行情感分析推理：")
